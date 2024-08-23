@@ -1,0 +1,7 @@
+Metadata-Version: 2.1
+Name: test_dabs
+Version: 0.0.1+20240822.110842
+Summary: wheel file based on test_dabs/src
+Home-page: https://databricks.com
+Author: ogbeidenelson@outlook.com
+Requires-Dist: setuptools
