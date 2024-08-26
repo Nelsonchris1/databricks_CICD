@@ -13,6 +13,7 @@ resources:
         on_failure:
           - ogbeidenelson@outlook.com
 
+# new task
       tasks:
         - task_key: notebook_task
           job_cluster_key: job_cluster
