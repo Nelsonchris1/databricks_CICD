@@ -21,9 +21,13 @@ targets:
   ## Optionally, there could be a 'staging' target here.
   ## (See Databricks docs on CI/CD at https://docs.databricks.com/dev-tools/bundles/ci-cd.html.)
   #
-  # staging:
-  #   workspace:
-  #     host: https://adb-2112394150840115.15.azuredatabricks.net
+  staging:
+    mode: production
+    workspace:
+      host: https://adb-2112394150840115.15.azuredatabricks.net
+      root_path: /Users/ogbeidenelson@outlook.com/.bundle/${bundle.name}/${bundle.target}
+    run_as:
+      user_name: ogbeidenelson@outlook.com
 
   # The 'prod' target, used for production deployment.
   prod:

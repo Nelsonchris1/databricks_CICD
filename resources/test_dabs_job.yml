@@ -2,7 +2,7 @@
 resources:
   jobs:
     test_dabs_job:
-      name: test_dabs_job
+      name: test_dabs_job_${bundle.target}
 
       schedule:
         # Run every day at 8:37 AM
@@ -13,11 +13,16 @@ resources:
         on_failure:
           - ogbeidenelson@outlook.com
 
+# new task
       tasks:
         - task_key: notebook_task
           job_cluster_key: job_cluster
           notebook_task:
             notebook_path: ../src/notebook.ipynb
+          libraries:
+            - pypi:
+                package: pytest
+          max_retries: 0
 
         # - task_key: refresh_pipeline
         #   depends_on:
