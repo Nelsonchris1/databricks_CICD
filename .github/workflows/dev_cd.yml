@@ -10,7 +10,7 @@ jobs:
   deploy:
     name: "Deploy bundle"
     runs-on: ubuntu-latest
-    if: ${{ github.event.workflow_run.result == 'success'}}
+    if: ${{ github.event.workflow_run.conclusion == 'success'}}
 
     steps:
       - name: Checkout code
@@ -27,9 +27,9 @@ jobs:
 
   pipeline_update:
     name: "Run pipeline update"
-    runs-on: ubunty-latest
+    runs-on: ubuntu-latest
     needs: deploy
-    if: ${{ github.event.workflow_run.result == 'success' }}
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
 
     steps:
       - name: Checkout code
@@ -39,11 +39,10 @@ jobs:
         uses: databricks/setup-cli@main
 
       - name: Run pipeline update
-        run:  |
+        run: |
           set -o pipefail
           databricks bundle run test_babs_job --refresh-all 2>&1 | tee output.log
-        
+
         env:
           DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
           DATABRICKS_BUNDLE_ENV: dev
-            
