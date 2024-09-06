@@ -2,7 +2,7 @@ name: dev_CD
 
 on:
   workflow_run:
-    workflows: ["dev_CI"]
+    workflows: [dev_CI]
     types:
       - completed
 
