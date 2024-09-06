@@ -37,7 +37,7 @@
 #           pytest tests/main_test.py --environment dev
 
 
-name: CI/CD Workflow
+name: dev_CI
 
 on:
   pull_request:
@@ -75,7 +75,7 @@ jobs:
   deploy_and_update:
     name: "Deploy and Pipeline Update"
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
