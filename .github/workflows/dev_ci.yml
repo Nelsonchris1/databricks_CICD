@@ -36,13 +36,12 @@
 #         run: |
 #           pytest tests/main_test.py --environment dev
 
-
 name: dev_CI
 
 on:
   pull_request:
     branches:
-      - main  # Run CI on pull requests to the main branch
+      - main # Run CI on pull requests to the main branch
 
 jobs:
   # CI Job: Runs tests
@@ -57,19 +56,18 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.x'
+          python-version: "3.x"
 
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirements.txt
+          pip install pytest setuptools
 
       - name: Run tests
         run: |
           pytest tests/main_test.py
         env:
           DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
-
 
   # CD Job: Deploy and run pipeline update if CI passes
   deploy_and_update:
@@ -98,6 +96,3 @@ jobs:
         env:
           DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
           DATABRICKS_BUNDLE_ENV: dev
-
-
-
