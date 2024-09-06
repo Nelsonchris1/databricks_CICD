@@ -1,0 +1,49 @@
+name: dev_CD
+
+on:
+  workflow_run:
+    workflows: dev_CI
+    types:
+      - completed
+
+jobs:
+  deploy:
+    name: "Deploy bundle"
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.result == 'success'}}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Databricks CLI
+        uses: databricks/setup-cli@main
+
+      - name: Deploy bundle
+        run: databricks bundle deploy
+        env:
+          Databricks_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
+          DATABRICKS_BUNDLE_ENV: dev
+
+    pipeline_update:
+      name: "Run pipeline update"
+      runs-on: ubunty-latest
+      needs: deploy
+      if: ${{ github.event.workflow_run.result == 'success' }}
+
+      steps:
+        - name: Checkout code
+          uses: actions/checkout@v3
+
+        - name: Set up Databricks CLI
+          uses: databricks/setup-cli@main
+
+        - name: Run pipeline update
+          run:  |
+            set -o pipefail
+            databricks bundle run test_babs_job --refresh-all 2>&1 | tee output.log
+          
+          env:
+            DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
+            DATABRICKS_BUNDLE_ENV: dev
+            
