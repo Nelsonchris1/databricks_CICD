@@ -65,7 +65,7 @@ jobs:
 
       - name: Run tests
         run: |
-          pytest tests/main_test.py --envrionment dev
+          pytest tests/main_test.py --environment dev
         env:
           DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
 
